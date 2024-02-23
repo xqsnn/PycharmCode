@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>检索结果</title>
+    <link rel="stylesheet" href="{% static '/plugins/bootstrap-5.3.0/css/bootstrap.css' %}">
+    <style>
+        .center {
+            margin: 50px auto;
+        );
+        }
+
+        .div_style {
+            height: 50px; /* 设置高度为 200 像素 */
+            line-height: 50px;
+        }
+
+    </style>
+    <script href="/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+
+<div class="container text-center div_style ">
+
+
+    <div class="center">
+        <table class="table table-success table-sm table-striped">
+            <thead>
+            <tr>
+
+                <th scope="col">书名</th>
+                <th scope="col">作者</th>
+                <th scope="col">类型</th>
+                <th scope="col">出版时间</th>
+
+                <th scope="col">在库数量</th>
+                <th scope="col">选择操作</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in result %}
+                <tr>
+                    <td>{{ book.book_name }}</td>
+                    <td>{{ book.book_author }}</td>
+                    <td>{{ book.book_catalog }}</td>
+                    <td>{{ book.time_into|date:'Y-m-d' }}</td>
+
+                    <td>{{ book.number_of_books }}</td>
+                    
+                    <td>
+                        <form action="">
+                            <button type="submit" class="btn btn-primary btn_edit">借阅</button>
+                        </form>
+                        
+
+                    </td>
+                </tr>
+
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+</body>
+</html>

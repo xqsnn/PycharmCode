@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书馆</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-5.3.0/css/bootstrap.css' %}">
+    <script src="/static/plugins/echarts.js"></script>
+    <script src="/static/js/jquery-3.7.1.min.js"></script>
+    <style>
+        .card {
+            position: relative;
+            top: 20px; /* 上偏移 20 像素 */
+            left: 30px;/* 左偏移 30 像素 */
+        }
+        .cata_front{
+            font-size: 25px;
+            font-weight: bold;
+            color: black;
+            font-family: "Helvetica", sans-serif;
+        }
+        .div_style{
+             height:100px; /* 设置高度为 200 像素 */
+            line-height: 100px;
+        }
+        .card_style{
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+
+
+
+    </style>
+
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="/static/img/book-half.svg" alt="Bootstrap" width="30" height="24">
+                </a>
+            </div>
+        </nav>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'main' %}">首页</a>
+                </li>
+{#                <li class="nav-item">#}
+{##}
+{#                    <a class="nav-link active" aria-current="page" href="#">图书检索</a>#}
+{#                </li>#}
+            </ul>
+
+            <div class=" col-3 container mt-4">
+                <form action="{% url 'search_result' %}" method="GET">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="检索图书"
+                               aria-label="Recipient's username" aria-describedby="button-addon2" 
+                               name="search_info" required>
+                        <button id="search" class="btn btn-outline-secondary"  type="submit" id="button-addon2">搜索</button>
+                    </div>
+                </form>
+
+                
+                <!-- Bootstrap 搜索框 -->
+            </div>
+
+            <span>
+            {% if log_meg == 1 %}
+                <button type="button" class="btn btn-primary">
+                        <a class="btn btn-primary">欢迎</a>
+                        <a href="/library/uLogin/uSpace/" class="btn btn-primary">个人中心</a>
+                    {% else %}
+                        <button type="button" class="btn btn-primary">
+                        <a href="uLogin/" class="btn btn-primary">用户登录</a>
+                        <a href="aLogin/" class="btn btn-primary">管理员登录</a>
+                        </button>
+                </button>
+            {% endif %}
+            </span>
+        </div>
+    </div>
+
+</nav>
+
+
+<div class="container text-center div_style ">
+    <div class="row cata_front">
+        <div class="col">
+            <p class="fw-bold">图书分类</p>
+        </div>
+        <div class="col" id = 'history'>文学</div>
+        <div class="col">历史</div>
+        <div class="col">心理</div>
+        <div class="col">悬疑</div>
+        <div class="col">科技</div>
+
+
+    </div>
+</div>
+
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+{#<div id="main" style="width: 600px;height:400px;"></div>#}
+
+<div class="container text-center" id = 'book_content1'>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <div class="card" style="width: 15rem;">
+                <img src="/static/img/img_1.png" class="card-img-top" id="img" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">平凡的世界</h5>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+{#        <div class="col-3">#}
+{#            <div class="card" style="width: 15rem;">#}
+{#                <img src="/static/img/book1.png" class="card-img-top" alt="...">#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">Django学习</h5>#}
+{#                    <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="col-3">#}
+{#            <div class="card" style="width: 15rem;">#}
+{#                <img src="/static/img/img.png" class="card-img-top" alt="...">#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">百年孤独</h5>#}
+{#                    <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="col-3">#}
+{#            <div class="card" style="width: 15rem;">#}
+{#                <img src="/static/img/img_1.png" class="card-img-top" alt="...">#}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">平凡的世界</h5>#}
+{#                    <a href="#" class="btn btn-primary">Go somewhere</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+    </div>
+</div>
+
+
+</body>
+</html>

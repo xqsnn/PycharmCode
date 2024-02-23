@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ZH-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑图书信息</title>
+    <link rel="stylesheet" href="{% static '/plugins/bootstrap-5.3.0/css/bootstrap.css' %}">
+    <script href="/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div style="width: 600px;height:50px;"></div>
+
+<form  method="POST">
+    {% csrf_token %}
+    <div class="container-lg border">
+        <div style="height:50px;">编辑图书信息</div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">书籍名称</label>
+            <input type="text" class="form-control" id="formGroupExampleInput"
+                   name="input_name" value={{ book.book_name }} required>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">作者</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2"
+                   name="input_author" value={{ book.book_author }} required>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">书籍类型</label>
+            <input type="text"  class="form-control" id="formGroupExampleInput3"
+                   name="input_catalog" value={{ book.book_catalog }} required>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">出版时间</label>
+            <input type="date" class="form-control"  id="formGroupExampleInput4"
+                   name="input_time" value="{{ book.time_into| date:'Y-m-d' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">在馆数量</label>
+            <input type="text" class="form-control" id="formGroupExampleInput5"
+                   name="input_number" value="{{ book.number_of_books }} "
+                   required>
+        </div>
+        <div class="container mb-4">
+            <div class="row">
+                <div class="col-10"></div>
+                <div class="col-2">
+                    <form action="/library/book_manage/allbooks/" method="GET">
+                        <button type="submit" class="btn btn-secondary">关闭</button>
+                    </form>
+
+                    <button type="submit" class="btn btn-primary">保存</button>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="/static/plugins/bootstrap-5.3.0/js/bootstrap.bundle.js"></script>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>在库图书</title>
+    <link rel="stylesheet" href="{% static '/plugins/bootstrap-5.3.0/css/bootstrap.css' %}">
+    <style>
+        .center {
+            margin: 50px auto;
+        );
+        }
+
+        .div_style {
+            height: 50px; /* 设置高度为 200 像素 */
+            line-height: 50px;
+        }
+
+    </style>
+     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script href="/jquery-3.7.1.min.js"></script>
+
+</head>
+<body>
+{#导航栏#}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="/static/img/book-half.svg" alt="Bootstrap" width="30" height="24">
+                </a>
+            </div>
+        </nav>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'main' %}">首页</a>
+                </li>
+                {#                <li class="nav-item">#}
+                {##}
+                {#                    <a class="nav-link active" aria-current="page" href="#">图书检索</a>#}
+                {#                </li>#}
+            </ul>
+
+            <div class=" col-3 container mt-4">
+                <form action="{% url 'search_result' %}" method="GET">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="检索图书"
+                               aria-label="Recipient's username" aria-describedby="button-addon2"
+                               name="search_info" required>
+                        <button id="search" class="btn btn-outline-secondary" type="submit" id="button-addon2">搜索
+                        </button>
+                    </div>
+                </form>
+
+
+                <!-- Bootstrap 搜索框 -->
+            </div>
+
+        </div>
+    </div>
+
+</nav>
+
+
+<div class="container text-center div_style ">
+
+    {#第二栏、功能栏#}
+    <div class="row cata_front">
+        <div class="col bg-color-hover">
+            <a href="/library/book_manage/allbooks" style="text-decoration: none">在库图书</a>
+        </div>
+        <div class="col" id='history'>111</div>
+        <div class="col">22</div>
+        <div class="col">33</div>
+        <div class="col">44</div>
+        <div class="col">55</div>
+    </div>
+
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            {#    #新入库图书#}
+            <!-- Button trigger modal -->
+            <button
+                    style='display: flex;justify-content: space-between;align-items: center;'
+                    type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop">
+                入库图书
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">入库图书</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+
+                        <div class="modal-body">
+                            {#                            入库图书表单#}
+                            <form class="row g-3" method="post">
+                                {% csrf_token %}
+                                <div class="col-md-6">
+                                    <label for="inputEmail4" class="form-label">书名</label>
+                                    <input type="text" class="form-control" id='input_name' name="input_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputPassword4" class="form-label">作者</label>
+                                    <input type="text" class="form-control" name="input_author" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputAddress" class="form-label">类别</label>
+                                    <input type="text" class="form-control" name="input_catalog" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputAddress" class="form-label">入库数目</label>
+                                    <input type="text" class="form-control" name="input_number" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputAddress" class="form-label">出版时间</label>
+                                    <input type="text" class="form-control" name="input_time" required
+                                           placeholder="2022-09-12">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">保存</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {#    #馆藏图书展示，可以编辑和删除#}
+
+
+            <div class="center">
+                <table class="table table-success  table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">书名</th>
+                        <th scope="col">作者</th>
+                        <th scope="col">
+
+                            <select class="form-select" aria-label="Default select example" name='choose' id="choose">
+                                <option value="0" selected>全部类型</option>
+                                {% for obj in catalog %}
+                                    <option value="{{ obj.id }}">{{ obj.library_book_catalog }}</option>
+
+                                {% endfor %}
+                            </select>
+
+
+                        </th>
+
+                        <th scope="col">入库时间</th>
+                        <th scope="col">在馆数量</th>
+                        <th scope="col">选择操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for book in data %}
+                        <tr>
+                            <th scope="row">{{ book.id }}</th>
+                            <td>{{ book.book_name }}</td>
+                            <td>{{ book.book_author }}</td>
+                            <td>{{ book.book_catalog }}</td>
+                            <td>{{ book.time_into| date:'Y-m-d' }}</td>
+                            <td>{{ book.number_of_books }}</td>
+                            <td>
+                                {#                                编辑图书按钮#}
+                                <a type="button " class="btn btn-primary"
+                                   href="/library/book_manage/{{ book.id }}/edit/">编辑</a>
+                                {#                                删除图书按钮#}
+                                <a class="btn btn-danger"
+                                   href="/library/book_manage/delete/?book_id={{ book.id }}">删除</a>
+                            </td>
+                        </tr>
+
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+
+            </div>
+
+
+        </li>
+    </ul>
+
+
+</div>
+<script type="text/javascript">
+    <script href="/jquery-3.7.1.min.js"></script>
+
+<script>
+    $("select").click(function () {
+        $.ajax({
+            type: "get",   //请求类型
+            dataType: "json",   //请求数据返回类型
+            url: "book_manage/allbooks/choose/",    //请求地址
+            data: {"val": "0"},      //传参
+            success: function (result) {        //成功
+                
+                    console.log("成功");
+                    
+            },
+            error: function (result) {      //失败
+                console.log(result);
+                console.log("异常");
+            }
+        });
+    })
+
+</script>
+<script href="/jquery-3.7.1.min.js"></script>
+<script src="/static/plugins/bootstrap-5.3.0/js/bootstrap.bundle.js"></script>
+</body>
+</html>

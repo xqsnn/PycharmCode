@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图书管理系统</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-5.3.0/css/bootstrap.css' %}">
+    <script src="/static/plugins/echarts.js"></script>
+    <style>
+        .div_style{
+             height:100px; /* 设置高度为 200 像素 */
+            line-height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container text-center div_style ">
+    <div class="row cata_front">
+        <div class="col">
+            <a href="/library/book_manage/allbooks">在库图书</a>
+        </div>
+        <div class="col" id = 'history'>111</div>
+        <div class="col">22</div>
+        <div class="col">33</div>
+        <div class="col">44</div>
+        <div class="col">55</div>
+    </div>
+</div>
+
+</body>
+</html>
